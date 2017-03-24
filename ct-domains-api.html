@@ -1,0 +1,112 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+<link rel="import" href="../ct-core-utils/ct-api-provider-behaviour.html">
+<link rel="import" href="../ct-core-utils/ct-user-identity">
+<!--
+`ct-domains-api`
+API for domain management
+-->
+<dom-module id="ct-domains-api">
+  <template>
+
+    <ct-user-identity id="identity"></ct-user-identity>
+
+    <iron-ajax id="newDomain"></iron-ajax>
+    <iron-ajax id="findDomains"></iron-ajax>
+    <iron-ajax id="getDomain"></iron-ajax>
+    <iron-ajax id="updateDomain"></iron-ajax>
+    <iron-ajax id="linkClient"></iron-ajax>
+    <iron-ajax id="unlinkClient"></iron-ajax>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'ct-domains-api',
+      behaviors: [CT.Behaviours.ApiProvider],
+
+      /**
+       * Create a new domain
+       *
+       * @param {{ Object, name: string, company: string }} newDomain
+       * @returns {Promise}
+       */
+      newDomain: function(newDomain) {
+        this.$.newDomain.url = this._url('/domains');
+        this.$.newDomain.method = "POST";
+        this.$.newDomain.contentType = "application/json";
+        this.$.newDomain.body = newDomain;
+
+        return this._generateRequest(this.$.newDomain);
+      },
+
+      /**
+       * Find domains by filter values
+       *
+       * @returns {Promise}
+       */
+      findDomains: function() {
+        this.$.findDomains.url = this._url('/domains');
+        return this._generateRequest(this.$.findDomains);
+      },
+
+      /**
+       * Get a domain by id
+       *
+       * @param {{ String, domainId: string }} domainId
+       * @returns {Promise}
+       */
+      getDomain: function(domainId) {
+        this.$.getDomain.url = this._url('/domains');
+        return this._generateRequest(this.$.getDomain);
+      },
+
+      /**
+       * Update a domain
+       *
+       * @param {{ String, domainId: string }} domainId
+       * @param {{ Object, name: string, company: string }} values
+       * @returns {Promise}
+       */
+      updateDomain: function(domainId, values) {
+        this.$.updateDomain.url = this._url('domains/' + domainId);
+        this.$.updateDomain.method = "PUT";
+        this.$.updateDomain.contentType = "application/json";
+        this.$.updateDomain.body = values;
+
+        return this._generateRequest(this.$.updateDomain);
+      },
+
+      /**
+       * Allow a client access to a domain
+       *
+       * @param {{ String, domainId: string }} domainId
+       * @param {{ String, clientId: string }} clientId
+       * @param {{ Object, tokenRedirectUri: string, tokenExpirationMinutes: int, signUpGroupId: string }} oauthValues
+       * @returns {Promise}
+       */
+      linkClient: function(domainId, clientId, oauthValues) {
+        this.$.linkClient.url = this._url('domains/' + domainId + '/clients' + clientId + '/link');
+        this.$.linkClient.method = "PUT";
+        this.$.linkClient.contentType = "application/json";
+        this.$.linkClient.body = oauthValues;
+
+        return this._generateRequest(this.$.linkClient);
+      },
+
+      /**
+       * Revoke a client's access to a domain
+       *
+       * @param {{ String, domainId: string }} domainId
+       * @param {{ String, clientId: string }} clientId
+       * @returns {Promise}
+       */
+      unlinkClient: function(domainId, clientId) {
+        this.$.unlinkClient.url = this._url('domains/' + domainId + '/clients' + clientId + '/link');
+        this.$.unlinkClient.method = "DELETE";
+        this.$.unlinkClient.contentType = "application/json";
+
+        return this._generateRequest(this.$.unlinkClient);
+      }
+    });
+  </script>
+</dom-module>
