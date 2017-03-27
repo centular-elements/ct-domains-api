@@ -69,7 +69,7 @@ API for domain management
        * @returns {Promise}
        */
       updateDomain: function(domainId, values) {
-        this.$.updateDomain.url = this._url('domains/' + domainId);
+        this.$.updateDomain.url = this._url('/domains/' + domainId);
         this.$.updateDomain.method = "PUT";
         this.$.updateDomain.contentType = "application/json";
         this.$.updateDomain.body = values;
@@ -84,7 +84,7 @@ API for domain management
        * @returns {Promise}
        */
       deleteDomain: function(domainId) {
-        this.$.deleteDomain.url = this._url('domains/' + domainId);
+        this.$.deleteDomain.url = this._url('/domains/' + domainId);
         this.$.deleteDomain.method = "DELETE";
         this.$.deleteDomain.contentType = "application/json";
 
@@ -100,7 +100,7 @@ API for domain management
        * @returns {Promise}
        */
       linkClient: function(domainId, clientId, oauthValues) {
-        this.$.linkClient.url = this._url('domains/' + domainId + '/clients' + clientId + '/link');
+        this.$.linkClient.url = this._url('/domains/' + domainId + '/clients' + clientId + '/link');
         this.$.linkClient.method = "PUT";
         this.$.linkClient.contentType = "application/json";
         this.$.linkClient.body = oauthValues;
@@ -116,7 +116,7 @@ API for domain management
        * @returns {Promise}
        */
       unlinkClient: function(domainId, clientId) {
-        this.$.unlinkClient.url = this._url('domains/' + domainId + '/clients' + clientId + '/link');
+        this.$.unlinkClient.url = this._url('/domains/' + domainId + '/clients' + clientId + '/link');
         this.$.unlinkClient.method = "DELETE";
         this.$.unlinkClient.contentType = "application/json";
 
