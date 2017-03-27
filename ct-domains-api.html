@@ -15,6 +15,7 @@ API for domain management
     <iron-ajax id="findDomains"></iron-ajax>
     <iron-ajax id="getDomain"></iron-ajax>
     <iron-ajax id="updateDomain"></iron-ajax>
+    <iron-ajax id="deleteDomain"></iron-ajax>
     <iron-ajax id="linkClient"></iron-ajax>
     <iron-ajax id="unlinkClient"></iron-ajax>
   </template>
@@ -74,6 +75,20 @@ API for domain management
         this.$.updateDomain.body = values;
 
         return this._generateRequest(this.$.updateDomain);
+      },
+
+      /**
+       * Delete a domain
+       *
+       * @param {{ String, domainId: string }} domainId
+       * @returns {Promise}
+       */
+      deleteDomain: function(domainId) {
+        this.$.deleteDomain.url = this._url('domains/' + domainId);
+        this.$.deleteDomain.method = "DELETE";
+        this.$.deleteDomain.contentType = "application/json";
+
+        return this._generateRequest(this.$.deleteDomain);
       },
 
       /**
