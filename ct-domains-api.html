@@ -18,6 +18,7 @@ API for domain management
     <iron-ajax id="deleteDomain"></iron-ajax>
     <iron-ajax id="linkClient"></iron-ajax>
     <iron-ajax id="unlinkClient"></iron-ajax>
+    <iron-ajax id="getDomainClients"></iron-ajax>
   </template>
 
   <script>
@@ -57,7 +58,7 @@ API for domain management
        * @returns {Promise}
        */
       getDomain: function(domainId) {
-        this.$.getDomain.url = this._url('/domains');
+        this.$.getDomain.url = this._url('/domains/' + domainId);
         return this._generateRequest(this.$.getDomain);
       },
 
@@ -121,7 +122,19 @@ API for domain management
         this.$.unlinkClient.contentType = "application/json";
 
         return this._generateRequest(this.$.unlinkClient);
+      },
+
+      /**
+       * Get a domain's clients
+       *
+       * @param {{ String, domainId: string }} domainId
+       * @returns {Promise}
+       */
+      getDomainClients: function(domainId) {
+        this.$.getDomainClients.url = this._url('/domains/' + domainId + '/clients');
+        return this._generateRequest(this.$.getDomainClients);
       }
+
     });
   </script>
 </dom-module>
