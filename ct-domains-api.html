@@ -107,34 +107,7 @@ API for domain management
         this.$.linkClient.body = oauthValues;
 
         return this._generateRequest(this.$.linkClient);
-      },
-
-      /**
-       * Revoke a client's access to a domain
-       *
-       * @param {{ String, domainId: string }} domainId
-       * @param {{ String, clientId: string }} clientId
-       * @returns {Promise}
-       */
-      unlinkClient: function(domainId, clientId) {
-        this.$.unlinkClient.url = this._url('/domains/' + domainId + '/clients/' + clientId + '/link');
-        this.$.unlinkClient.method = "DELETE";
-        this.$.unlinkClient.contentType = "application/json";
-
-        return this._generateRequest(this.$.unlinkClient);
-      },
-
-      /**
-       * Get a domain's clients
-       *
-       * @param {{ String, domainId: string }} domainId
-       * @returns {Promise}
-       */
-      getDomainClients: function(domainId) {
-        this.$.getDomainClients.url = this._url('/domains/' + domainId + '/clients');
-        return this._generateRequest(this.$.getDomainClients);
       }
-
     });
   </script>
 </dom-module>
